@@ -1,0 +1,28 @@
+version: 0.1.0
+
+dep: demolib2
+
+path:
+  source: source
+  install: install
+  build: build
+  home: install
+  bin: install/bin
+
+env:
+  prepend_path:
+    PATH: "{bin}"
+  set_env:
+    DEMOEXE_HOME: "{home}"
+    DEMOEXE_BIN: "{bin}"
+  alias:
+    de: demoexe
+
+install:
+  download:
+    git:
+      url: https://github.com/bsmsoft/demoexe.git
+      tag: "v{version}"
+  configure: cmake
+  compile: make
+  install: make_install

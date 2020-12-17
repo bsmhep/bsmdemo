@@ -1,0 +1,41 @@
+bsm:
+  require: '==0.4.*'
+
+category:
+  lib:
+    install: true
+    auto_env: true
+    version_dir: true
+    root: '{software_root}/{version}/lib'
+  exe:
+    install: true
+    auto_env: true
+    version_dir: true
+    root: '{software_root}/{version}/exe'
+
+category_priority: [lib, exe]
+
+install:
+  steps:
+    - download
+    - configure
+    - compile
+    - install
+  atomic_start: configure
+  atomic_end: install
+
+env:
+  set_env:
+    BSMDEMO: '{software_root}/{version}'
+    BSMDEMO_LIB: '{software_root}/{version}/lib'
+    BSMDEMO_EXE: '{software_root}/{version}/exe'
+    BSMDEMO_VERSION: '{version}'
+  unset_env:
+    - http_proxy
+    - https_proxy
+  append_path:
+    BSM_APP_VERSION_PATH: ['bsmdemo@{version}']
+  alias:
+    bsmecho: 'echo \"This is a BSM demo!\"'
+  unalias:
+    - undef_bsm_test
